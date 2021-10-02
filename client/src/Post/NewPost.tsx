@@ -1,17 +1,19 @@
 import React from 'react';
 
-class Thread extends React.Component {
+class NewPost extends React.Component {
     constructor(props: any) {
         super(props);
 
+        this.state = {
 
+        };
     }
 
     render() {
         return (
-            <div>Thread</div>
+            <div>New Post</div>
         );
     }
 }
 
-export default Thread;
+export default NewPost;
