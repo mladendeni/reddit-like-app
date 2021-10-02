@@ -17,7 +17,7 @@ const posts = [
   {
     author: 'mr_new_driver',
     createdOn: 1632070515993,
-    content: 'Should you use indicator when entering a roundabout in Bulgaria and which one if "yes"?',
+    content: 'Should you use an indicator when entering a roundabout in Bulgaria and which one if "yes"?',
     comments: [
       {
         author: 'pro_driver',

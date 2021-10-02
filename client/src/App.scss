@@ -1,5 +1,29 @@
+.generic-box {
+    padding: 5px;
+    background-color: #1a1a1b;
+    border: 1px solid #343536;
+}
+.header-component {
+    margin-bottom: 10px;
+
+    .generic-box {
+        padding: 12px;
+    }
+}
+
 @media (min-width: 640px) {
     .main-app-wrapper {
         padding: 24px;
+    }
+
+    .generic-box {
+        border-radius: 4px;
+    }
+}
+
+@media (min-width: 980px) {
+    .top-container {
+        display: flex;
+        justify-content: space-between;
     }
 }

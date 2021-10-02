@@ -1,0 +1,39 @@
+@import '../styles/variables.scss';
+
+.username-component {
+    margin: auto;
+    max-width: 400px;
+}
+
+.username-title {
+    margin-bottom: 5px;
+}
+
+.username-input-wrapper {
+    position: relative;
+}
+
+.username-input {
+    padding: 7px 12px 7px 28px;
+    background-color: #272729;
+    border: 1px solid #343536;
+    border-radius: 3px;
+    color: inherit;
+
+    &:focus,
+    &:active {
+        outline: 1px solid #666;
+    }
+}
+
+.username-edit-icon {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+}
+
+@media (min-width: 980px) {
+    .username-component {
+        margin-left: 0;
+    }
+}
