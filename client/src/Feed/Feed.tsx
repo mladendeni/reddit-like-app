@@ -49,16 +49,6 @@ class Feed extends Component<IProps, IState> {
         this.getPosts();
     }
 
-    convertDate(timestamp?: number) {
-        if (!timestamp) {
-            return;
-        }
-
-        const date = new Date(timestamp);
-
-        return date.toDateString();
-    }
-
     render() {
         return (
             <div className="posts-list-wrapper">
@@ -67,7 +57,7 @@ class Feed extends Component<IProps, IState> {
                     {
                         this.state.posts.map((post, index) => {
                             return (
-                                <div key={index} className="post-item">
+                                <div key={index} className="post-item generic-box">
                                     <div className="post-info">Posted by {post.author} {timeDifference(post.createdOn)}</div>
                                     <div className="post-content">{post.content}</div>
                                     <div className="post-comments-count">
