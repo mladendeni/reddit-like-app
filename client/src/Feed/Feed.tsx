@@ -1,4 +1,7 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { Component } from 'react';
+import { timeDifference } from '../Helpers/helper';
+import './Feed.scss';
 
 type Post = {
     author: string;
@@ -58,18 +61,28 @@ class Feed extends Component<IProps, IState> {
 
     render() {
         return (
-            <div className="posts-list">
-                {
-                    this.state.posts.map((post, index) => {
-                        return (
-                            <div key={index} className="post-item">
-                                <div>Posted by {post.author} on {this.convertDate(post.createdOn)}</div>
-                                <div>{post.content}</div>
-                                <div>{post.comments.length} comments</div>
-                            </div>
-                        );
-                    })
-                }
+            <div className="posts-list-wrapper">
+                <h1 className="posts-list-title">Newest posts</h1>
+                <div>
+                    {
+                        this.state.posts.map((post, index) => {
+                            return (
+                                <div key={index} className="post-item">
+                                    <div className="post-info">Posted by {post.author} {timeDifference(post.createdOn)}</div>
+                                    <div className="post-content">{post.content}</div>
+                                    <div className="post-comments-count">
+                                        <button type="button" className="toggle-comments-button">
+                                            <span className="post-comments-icon">
+                                                <FontAwesomeIcon icon="comment" />
+                                            </span>
+                                            <span>{post.comments.length} comments</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            );
+                        })
+                    }
+                </div>
             </div>
         );
     }

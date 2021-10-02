@@ -10,9 +10,21 @@ const app = module.exports = new Koa();
 const posts = [
   {
     author: 'Mladen',
-    createdOn: Date.now(),
+    createdOn: 1633160531499,
     content: 'Hello. This is my first post on Reddit.',
     comments: []
+  },
+  {
+    author: 'mr_new_driver',
+    createdOn: 1632070515993,
+    content: 'Should you use indicator when entering a roundabout in Bulgaria and which one if "yes"?',
+    comments: [
+      {
+        author: 'pro_driver',
+        createdOn: 1632070555993,
+        content: 'The right one'
+      }
+    ]
   }
 ];
 
