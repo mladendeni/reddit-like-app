@@ -12,6 +12,7 @@ export type CommentType = {
 interface IProps {
     postId: number;
     username: string;
+    onNewCommentAdded: (commentsCount: number) => void;
 }
 
 interface IState {
@@ -25,15 +26,15 @@ class Comments extends React.Component<IProps, IState> {
         this.state = {
             comments: []
         };
-        
-    this.onNewCommentAdded = this.onNewCommentAdded.bind(this);
+
+        this.onNewCommentAdded = this.onNewCommentAdded.bind(this);
     }
 
     getComments() {
         // TODO: move URLs
         const postsUrl = `http://localhost:3001/comments/${this.props.postId}`;
 
-        fetch(postsUrl, {
+        return fetch(postsUrl, {
             // TODO: fix headers
             // mode: 'no-cors',
             headers: {
@@ -50,8 +51,10 @@ class Comments extends React.Component<IProps, IState> {
             });
     }
 
-    onNewCommentAdded() {
-        this.getComments();
+    async onNewCommentAdded() {
+        await this.getComments();
+
+        this.props.onNewCommentAdded(this.state.comments.length);
     }
 
     componentDidMount() {
