@@ -18,18 +18,15 @@ class Username extends Component<IProps, IState> {
             username: ''
         };
 
-        this.handleUsernameChange = this.handleUsernameChange.bind(this);
         this.updateUsername = this.updateUsername.bind(this);
     }
 
-    handleUsernameChange(event: React.FormEvent<HTMLInputElement>) {
+    updateUsername(event: React.FormEvent<HTMLInputElement>) {
         this.setState({
             username: event.currentTarget.value
         });
-    }
 
-    updateUsername() {
-        this.props.updateUsername(this.state.username);
+        this.props.updateUsername(event.currentTarget.value);
     }
 
     render() {
@@ -39,7 +36,7 @@ class Username extends Component<IProps, IState> {
                     <div className="username-title">Username:</div>
                     <div className="username-input-wrapper">
                         <FontAwesomeIcon icon="pencil-alt" className="username-edit-icon" />
-                        <input type="text" onChange={this.handleUsernameChange} value={this.state.username} placeholder="Guest" className="username-input" />
+                        <input type="text" onChange={this.updateUsername} value={this.state.username} placeholder="Guest" className="username-input inpt-1" />
                     </div>
                 </div>
             </div>

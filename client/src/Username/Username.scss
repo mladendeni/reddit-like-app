@@ -15,10 +15,6 @@
 
 .username-input {
     padding: 7px 12px 7px 28px;
-    background-color: #272729;
-    border: 1px solid #343536;
-    border-radius: 3px;
-    color: inherit;
 
     &:focus,
     &:active {
@@ -28,8 +24,10 @@
 
 .username-edit-icon {
     position: absolute;
-    top: 8px;
+    top: 0;
+    bottom: 0;
     left: 8px;
+    margin: auto;
 }
 
 @media (min-width: 980px) {

@@ -1,9 +1,8 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { Component } from 'react';
-import { timeDifference } from '../Helpers/helper';
+import Post from '../Post/Post';
 import './Feed.scss';
 
-type Post = {
+export type PostType = {
     author: string;
     createdOn: number;
     content: string;
@@ -11,10 +10,11 @@ type Post = {
 }
 
 interface IProps {
+    lastPostId: number
 }
 
 interface IState {
-    posts: Post[]
+    posts: PostType[]
 }
 
 class Feed extends Component<IProps, IState> {
@@ -27,9 +27,11 @@ class Feed extends Component<IProps, IState> {
     }
 
     getPosts() {
+        // TODO: move URLs
         const postsUrl = 'http://localhost:3001/posts';
 
         fetch(postsUrl, {
+            // TODO: fix headers
             // mode: 'no-cors',
             headers: {
                 'Access-Control-Allow-Origin': '*'
@@ -49,28 +51,24 @@ class Feed extends Component<IProps, IState> {
         this.getPosts();
     }
 
+    componentDidUpdate(prevProps: IProps) {
+        if (prevProps.lastPostId !== this.props.lastPostId) {
+            this.getPosts();
+        }
+    }
+
     render() {
         return (
             <div className="posts-list-wrapper">
                 <h1 className="posts-list-title">Newest posts</h1>
                 <div>
                     {
-                        this.state.posts.map((post, index) => {
-                            return (
-                                <div key={index} className="post-item generic-box">
-                                    <div className="post-info">Posted by {post.author} {timeDifference(post.createdOn)}</div>
-                                    <div className="post-content">{post.content}</div>
-                                    <div className="post-comments-count">
-                                        <button type="button" className="toggle-comments-button">
-                                            <span className="post-comments-icon">
-                                                <FontAwesomeIcon icon="comment" />
-                                            </span>
-                                            <span>{post.comments.length} comments</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            );
-                        })
+                        this.state.posts.map((post, index) => <Post post={post} key={index} />)
+                    }
+                    {
+                        this.state.posts.length === 0 && (
+                            <h3>No posts yet!</h3>
+                        )
                     }
                 </div>
             </div>

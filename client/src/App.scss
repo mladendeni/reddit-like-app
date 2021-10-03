@@ -1,7 +1,9 @@
+@import './styles/variables.scss';
+
 .generic-box {
     padding: 5px;
-    background-color: #1a1a1b;
-    border: 1px solid #343536;
+    background-color: $bg-color;
+    border: 1px solid $border-color;
 }
 .header-component {
     margin-bottom: 10px;
@@ -9,6 +11,34 @@
     .generic-box {
         padding: 12px;
     }
+}
+
+.error-message {
+    font-size: 12px;
+    color: #c00;
+}
+
+.btn-1 {
+    padding: 11px 27px;
+    background-color: $bg-color;
+    border: 1px solid $border-color;
+    border-radius: 5px;
+    color: inherit;
+    cursor: pointer;
+    
+    &:hover {
+        background-color: rgba($main-color, 0.3);
+    }
+}
+
+.inpt-1 {
+    background-color: $bg-color-2;
+    border: 1px solid $border-color;
+    border-radius: 3px;
+    color: inherit;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: inherit;
 }
 
 @media (min-width: 640px) {
