@@ -1,4 +1,5 @@
 import React, { ChangeEvent } from 'react';
+import { getApiUrl } from '../api';
 
 interface IProps {
     postId: number;
@@ -12,6 +13,8 @@ interface IState {
 }
 
 class NewComment extends React.Component<IProps, IState> {
+    apiUrl: string;
+
     constructor(props: IProps) {
         super(props);
 
@@ -19,6 +22,8 @@ class NewComment extends React.Component<IProps, IState> {
             showError: false,
             content: ''
         };
+
+        this.apiUrl = getApiUrl();
 
         this.onCommentContentChange = this.onCommentContentChange.bind(this);
         this.submitComment = this.submitComment.bind(this);
@@ -46,13 +51,12 @@ class NewComment extends React.Component<IProps, IState> {
         };
 
         // TODO: move URLs
-        const addCommentUrl = `http://localhost:3001/add-comment/${this.props.postId}`;
+        const addCommentUrl = `${this.apiUrl}/add-comment/${this.props.postId}`;
 
         fetch(addCommentUrl, {
-            // mode: 'no-cors',
             method: 'POST',
             headers: {
-                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Origin': this.apiUrl,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(comment)

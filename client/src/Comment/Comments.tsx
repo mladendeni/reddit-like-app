@@ -1,6 +1,7 @@
 import React from 'react';
 import Comment from './Comment';
 import NewComment from './NewComment';
+import { getApiUrl } from '../api';
 
 export type CommentType = {
     id: number;
@@ -20,6 +21,8 @@ interface IState {
 }
 
 class Comments extends React.Component<IProps, IState> {
+    apiUrl: string;
+
     constructor(props: IProps) {
         super(props);
 
@@ -27,18 +30,17 @@ class Comments extends React.Component<IProps, IState> {
             comments: []
         };
 
+        this.apiUrl = getApiUrl();
+
         this.onNewCommentAdded = this.onNewCommentAdded.bind(this);
     }
 
     getComments() {
-        // TODO: move URLs
-        const postsUrl = `http://localhost:3001/comments/${this.props.postId}`;
+        const postsUrl = `${this.apiUrl}/comments/${this.props.postId}`;
 
         return fetch(postsUrl, {
-            // TODO: fix headers
-            // mode: 'no-cors',
             headers: {
-                'Access-Control-Allow-Origin': '*'
+                'Access-Control-Allow-Origin': this.apiUrl
             }
         })
             .then(res => res.json())
