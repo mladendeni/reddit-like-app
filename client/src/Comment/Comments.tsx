@@ -1,5 +1,6 @@
 import React from 'react';
 import Comment from './Comment';
+import NewComment from './NewComment';
 
 export type CommentType = {
     id: number;
@@ -9,7 +10,8 @@ export type CommentType = {
 }
 
 interface IProps {
-    postId: number
+    postId: number;
+    username: string;
 }
 
 interface IState {
@@ -46,6 +48,10 @@ class Comments extends React.Component<IProps, IState> {
             });
     }
 
+    onNewCommentAdded() {
+
+    }
+
     componentDidMount() {
         this.getComments();
     }
@@ -53,9 +59,12 @@ class Comments extends React.Component<IProps, IState> {
     render() {
         return (
             <>
-                <div className="posts-list-title username-title">Comments</div>
+                <div className="generic-box mb-3">
+                    <div className="posts-list-title mb-1">Add new Comment</div>
+                    <NewComment postId={this.props.postId} username={this.props.username} onNewCommentAdded={this.onNewCommentAdded} />
+                </div>
 
-                {/* <div>Add new Comment</div> */}
+                <div className="posts-list-title mb-1">Comments</div>
 
                 {this.state.comments.length > 0 && (
                     <div>

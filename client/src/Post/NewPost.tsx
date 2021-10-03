@@ -14,7 +14,7 @@ interface IState {
 }
 
 class NewPost extends React.Component<IProps, IState> {
-    constructor(props: any) {
+    constructor(props: IProps) {
         super(props);
 
         this.state = {
@@ -58,9 +58,9 @@ class NewPost extends React.Component<IProps, IState> {
         };
 
         // TODO: move URLs
-        const postsUrl = 'http://localhost:3001/add-post';
+        const addPostUrl = 'http://localhost:3001/add-post';
 
-        fetch(postsUrl, {
+        fetch(addPostUrl, {
             // mode: 'no-cors',
             method: 'POST',
             headers: {
@@ -117,7 +117,7 @@ class NewPost extends React.Component<IProps, IState> {
                         <div className="overlay-item" onClick={this.onOverlayClick}></div>
                         <div className="new-post-form generic-box" onClick={this.onFormClick}>
                             <div>
-                                <textarea className="new-post-textarea inpt-1" onChange={this.onPostContentChange} value={this.state.content} />
+                                <textarea className="new-post-textarea inpt-1 mb-3" onChange={this.onPostContentChange} value={this.state.content} />
                                 <button className="new-post-button btn-1" type="button" onClick={this.submitPost}>Submit Post</button>
                             </div>
 

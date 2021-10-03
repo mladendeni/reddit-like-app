@@ -11,11 +11,12 @@ export type PostType = {
 }
 
 interface IProps {
-    lastPostId: number
+    lastPostId: number;
+    username: string;
 }
 
 interface IState {
-    posts: PostType[]
+    posts: PostType[];
 }
 
 class Feed extends Component<IProps, IState> {
@@ -64,7 +65,7 @@ class Feed extends Component<IProps, IState> {
                 <h1 className="posts-list-title">Newest posts</h1>
                 <div>
                     {
-                        this.state.posts.map((post, index) => <Post post={post} key={index} />)
+                        this.state.posts.map((post, index) => <Post key={index} post={post} username={this.props.username} />)
                     }
                     {
                         this.state.posts.length === 0 && (
