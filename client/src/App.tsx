@@ -49,7 +49,7 @@ class App extends Component<IProps, IState> {
           <Username updateUsername={this.updateUsername} />
           <NewPost username={this.state.username} onNewPostAdded={this.onNewPostAdded} />
         </div>
-        <Feed lastPostId={this.state.lastPostId} />
+        <Feed lastPostId={this.state.lastPostId} username={this.state.username} />
       </div>
     );
   }

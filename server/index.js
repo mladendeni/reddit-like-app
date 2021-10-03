@@ -9,28 +9,49 @@ const app = module.exports = new Koa();
 // "database"
 
 const posts = [
-  {
-    id: 1,
-    author: 'Mladen',
-    createdOn: 1633160531499,
-    content: 'Hello. This is my first post on Reddit.',
-    comments: []
-  },
-  {
-    id: 2,
-    author: 'mr_new_driver',
-    createdOn: 1632070515993,
-    content: 'Should you use an indicator when entering a roundabout in Bulgaria and which one if "yes"?',
-    comments: [
-      {
+    {
+        id: 2,
+        author: 'Mladen',
+        createdOn: 1633160531499,
+        content: 'Hello. This is my first post on Reddit.',
+        commentsCount: 0
+    },
+    {
         id: 1,
+        author: 'mr_new_driver',
+        createdOn: 1632070515993,
+        content: 'Should you use an indicator when entering a roundabout in Bulgaria and which one if "yes"?',
+        commentsCount: 0
+    }
+];
+
+const commentEntities = [
+    {
+        id: 1,
+        postId: 1,
         author: 'pro_driver',
         createdOn: 1632070555993,
         content: 'The right one'
-      }
-    ]
-  }
+    }
 ];
+
+const getPostsWithCommentsCount = () => {
+    posts.forEach((post) => {
+        post.commentsCount = commentEntities.filter((comment) => {
+            return comment.postId === post.id;
+        }).length;
+    });
+
+    return posts;
+};
+
+const getCommentsByPostId = (postId) => {
+    const postComments = commentEntities.filter((comment) => {
+        return comment.postId === postId;
+    });
+
+    return postComments;
+};
 
 // middleware
 
@@ -43,7 +64,9 @@ app.use(koaBody());
 // route definitions
 
 router.get('/posts', list)
-  .post('/add-post', add);
+    .post('/add-post', add)
+    .get('/comments/:postId', comments)
+    .post('/add-comment/:postId', addComment);
 
 app.use(router.routes());
 
@@ -52,7 +75,9 @@ app.use(router.routes());
  */
 
 async function list(ctx) {
-  ctx.body = { posts: posts };
+    ctx.body = {
+        posts: getPostsWithCommentsCount()
+    };
 }
 
 /**
@@ -60,26 +85,71 @@ async function list(ctx) {
  */
 
 async function add(ctx) {
-  if (!ctx.request.body.author) {
-    ctx.throw(500, 'Missing author!');
-  }
+    if (!ctx.request.body.author) {
+        ctx.throw(500, 'Missing author!');
+    }
 
-  if (!ctx.request.body.content) {
-    ctx.throw(500, 'Missing content!');
-  }
+    if (!ctx.request.body.content) {
+        ctx.throw(500, 'Missing content!');
+    }
 
-  const post = {
-    id: posts.length + 1,
-    author: ctx.request.body.author.trim(),
-    content: ctx.request.body.content.trim(),
-    createdOn: Date.now(),
-    comments: []
-  };
+    const post = {
+        id: posts.length + 1,
+        author: ctx.request.body.author.trim(),
+        content: ctx.request.body.content.trim(),
+        createdOn: Date.now(),
+        comments: []
+    };
 
-  posts.push(post);
+    posts.splice(0, 0, post); // put latest posts on top (sorted by NEWEST)
 
-  ctx.body = { id: post.id };
+    ctx.body = { id: post.id };
 }
+
+/**
+ * Comments listing.
+ */
+
+async function comments(ctx) {
+    const postId = parseInt(ctx.params.postId);
+
+    ctx.body = {
+        comments: getCommentsByPostId(postId)
+    };
+}
+
+/**
+ * Comment adding.
+ */
+
+async function addComment(ctx) {
+    const postId = parseInt(ctx.params.postId);
+
+    if (posts.filter((post) => { return post.id === postId; }).length === 0) {
+        ctx.throw(500, 'Missing post!');
+    }
+
+    if (!ctx.request.body.author) {
+        ctx.throw(500, 'Missing author!');
+    }
+
+    if (!ctx.request.body.content) {
+        ctx.throw(500, 'Missing content!');
+    }
+
+    const comment = {
+        id: commentEntities.length + 1,
+        postId: postId,
+        author: ctx.request.body.author.trim(),
+        content: ctx.request.body.content.trim(),
+        createdOn: Date.now()
+    };
+
+    commentEntities.push(comment);
+
+    ctx.body = { id: comment.id };
+}
+
 
 // listen
 

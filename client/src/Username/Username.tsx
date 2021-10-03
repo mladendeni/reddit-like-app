@@ -31,13 +31,11 @@ class Username extends Component<IProps, IState> {
 
     render() {
         return (
-            <div className="header-component username-component">
-                <div className="generic-box">
-                    <div className="username-title">Username:</div>
-                    <div className="username-input-wrapper">
-                        <FontAwesomeIcon icon="pencil-alt" className="username-edit-icon" />
-                        <input type="text" onChange={this.updateUsername} value={this.state.username} placeholder="Guest" className="username-input inpt-1" />
-                    </div>
+            <div className="username-component generic-box mb-3">
+                <div className="mb-1">Username:</div>
+                <div className="username-input-wrapper">
+                    <FontAwesomeIcon icon="pencil-alt" className="username-edit-icon" />
+                    <input type="text" onChange={this.updateUsername} value={this.state.username} placeholder="Guest" className="username-input inpt-1" />
                 </div>
             </div>
         );
