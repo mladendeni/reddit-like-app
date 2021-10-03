@@ -49,7 +49,7 @@ const getCommentsByPostId = (postId) => {
     const postComments = commentEntities.filter((comment) => {
         return comment.postId === postId;
     });
-    
+
     return postComments;
 };
 
@@ -65,7 +65,8 @@ app.use(koaBody());
 
 router.get('/posts', list)
     .post('/add-post', add)
-    .get('/comments/:postId', comments);
+    .get('/comments/:postId', comments)
+    .post('/add-comment/:postId', addComment);
 
 app.use(router.routes());
 
@@ -100,7 +101,7 @@ async function add(ctx) {
         comments: []
     };
 
-    posts.push(post);
+    posts.splice(0, 0, post); // put latest posts on top (sorted by NEWEST)
 
     ctx.body = { id: post.id };
 }
@@ -116,6 +117,39 @@ async function comments(ctx) {
         comments: getCommentsByPostId(postId)
     };
 }
+
+/**
+ * Comment adding.
+ */
+
+async function addComment(ctx) {
+    const postId = parseInt(ctx.params.postId);
+
+    if (posts.filter((post) => { return post.id === postId; }).length === 0) {
+        ctx.throw(500, 'Missing post!');
+    }
+
+    if (!ctx.request.body.author) {
+        ctx.throw(500, 'Missing author!');
+    }
+
+    if (!ctx.request.body.content) {
+        ctx.throw(500, 'Missing content!');
+    }
+
+    const comment = {
+        id: commentEntities.length + 1,
+        postId: postId,
+        author: ctx.request.body.author.trim(),
+        content: ctx.request.body.content.trim(),
+        createdOn: Date.now()
+    };
+
+    commentEntities.push(comment);
+
+    ctx.body = { id: comment.id };
+}
+
 
 // listen
 

@@ -16,7 +16,7 @@ export default function Post(props: { post: PostType, username: string }) {
                     <span className="post-comments-icon">
                         <FontAwesomeIcon icon="comment" />
                     </span>
-                    <span>{props.post.commentsCount} comments</span>
+                    <span>{props.post.commentsCount} comments</span> {/* TODO: This may not be always the actual comments count */}
                 </button>
             </div>
             {areCommentsShown && (

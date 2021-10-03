@@ -25,6 +25,8 @@ class Comments extends React.Component<IProps, IState> {
         this.state = {
             comments: []
         };
+        
+    this.onNewCommentAdded = this.onNewCommentAdded.bind(this);
     }
 
     getComments() {
@@ -49,7 +51,7 @@ class Comments extends React.Component<IProps, IState> {
     }
 
     onNewCommentAdded() {
-
+        this.getComments();
     }
 
     componentDidMount() {

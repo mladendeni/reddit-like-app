@@ -31,7 +31,7 @@ class Username extends Component<IProps, IState> {
 
     render() {
         return (
-            <div className="username-component generic-box">
+            <div className="username-component generic-box mb-3">
                 <div className="mb-1">Username:</div>
                 <div className="username-input-wrapper">
                     <FontAwesomeIcon icon="pencil-alt" className="username-edit-icon" />
