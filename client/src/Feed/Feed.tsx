@@ -3,10 +3,11 @@ import Post from '../Post/Post';
 import './Feed.scss';
 
 export type PostType = {
+    id: number;
     author: string;
     createdOn: number;
     content: string;
-    comments: any[];
+    commentsCount: number;
 }
 
 interface IProps {
