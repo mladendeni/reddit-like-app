@@ -1,57 +1,14 @@
 const cors = require('@koa/cors');
 const logger = require('koa-logger');
 const router = require('koa-router')();
-const koaBody = require('koa-body');
+const koaBodyParser = require('koa-bodyparser');
 
 const Koa = require('koa');
 const app = module.exports = new Koa();
 
 // "database"
 
-const posts = [
-    {
-        id: 2,
-        author: 'Mladen',
-        createdOn: 1633160531499,
-        content: 'Hello. This is my first post on Reddit.',
-        commentsCount: 0
-    },
-    {
-        id: 1,
-        author: 'mr_new_driver',
-        createdOn: 1632070515993,
-        content: 'Should you use an indicator when entering a roundabout in Bulgaria and which one if "yes"?',
-        commentsCount: 0
-    }
-];
-
-const commentEntities = [
-    {
-        id: 1,
-        postId: 1,
-        author: 'pro_driver',
-        createdOn: 1632070555993,
-        content: 'The right one'
-    }
-];
-
-const getPostsWithCommentsCount = () => {
-    posts.forEach((post) => {
-        post.commentsCount = commentEntities.filter((comment) => {
-            return comment.postId === post.id;
-        }).length;
-    });
-
-    return posts;
-};
-
-const getCommentsByPostId = (postId) => {
-    const postComments = commentEntities.filter((comment) => {
-        return comment.postId === postId;
-    });
-
-    return postComments;
-};
+const { getPostById, getPostsWithCommentsCount, getCommentsByPostId, addPostToDb, addCommentToDb } = require('./db/mockDb');
 
 // middleware
 
@@ -59,12 +16,12 @@ app.use(cors());
 
 app.use(logger());
 
-app.use(koaBody());
+app.use(koaBodyParser());
 
 // route definitions
 
-router.get('/posts', list)
-    .post('/add-post', add)
+router.get('/posts', posts)
+    .post('/add-post', addPost)
     .get('/comments/:postId', comments)
     .post('/add-comment/:postId', addComment);
 
@@ -74,7 +31,7 @@ app.use(router.routes());
  * Post listing.
  */
 
-async function list(ctx) {
+async function posts(ctx) {
     ctx.body = {
         posts: getPostsWithCommentsCount()
     };
@@ -84,7 +41,7 @@ async function list(ctx) {
  * Post adding.
  */
 
-async function add(ctx) {
+async function addPost(ctx) {
     if (!ctx.request.body.author) {
         ctx.throw(500, 'Missing author!');
     }
@@ -94,16 +51,15 @@ async function add(ctx) {
     }
 
     const post = {
-        id: posts.length + 1,
         author: ctx.request.body.author.trim(),
         content: ctx.request.body.content.trim(),
         createdOn: Date.now(),
         comments: []
     };
 
-    posts.splice(0, 0, post); // put latest posts on top (sorted by NEWEST)
+    const postId = addPostToDb(post);
 
-    ctx.body = { id: post.id };
+    ctx.body = { id: postId };
 }
 
 /**
@@ -124,8 +80,9 @@ async function comments(ctx) {
 
 async function addComment(ctx) {
     const postId = parseInt(ctx.params.postId);
+    const postEntity = getPostById(postId);
 
-    if (posts.filter((post) => { return post.id === postId; }).length === 0) {
+    if (!postEntity) {
         ctx.throw(500, 'Missing post!');
     }
 
@@ -138,16 +95,15 @@ async function addComment(ctx) {
     }
 
     const comment = {
-        id: commentEntities.length + 1,
         postId: postId,
         author: ctx.request.body.author.trim(),
         content: ctx.request.body.content.trim(),
         createdOn: Date.now()
     };
 
-    commentEntities.push(comment);
+    const commentId = addCommentToDb(comment);
 
-    ctx.body = { id: comment.id };
+    ctx.body = { id: commentId };
 }
 
 
