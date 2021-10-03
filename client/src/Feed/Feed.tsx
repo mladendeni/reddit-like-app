@@ -10,6 +10,7 @@ export type PostType = {
 }
 
 interface IProps {
+    lastPostId: number
 }
 
 interface IState {
@@ -30,6 +31,7 @@ class Feed extends Component<IProps, IState> {
         const postsUrl = 'http://localhost:3001/posts';
 
         fetch(postsUrl, {
+            // TODO: fix headers
             // mode: 'no-cors',
             headers: {
                 'Access-Control-Allow-Origin': '*'
@@ -49,6 +51,12 @@ class Feed extends Component<IProps, IState> {
         this.getPosts();
     }
 
+    componentDidUpdate(prevProps: IProps) {
+        if (prevProps.lastPostId !== this.props.lastPostId) {
+            this.getPosts();
+        }
+    }
+
     render() {
         return (
             <div className="posts-list-wrapper">
@@ -56,6 +64,11 @@ class Feed extends Component<IProps, IState> {
                 <div>
                     {
                         this.state.posts.map((post, index) => <Post post={post} key={index} />)
+                    }
+                    {
+                        this.state.posts.length === 0 && (
+                            <h3>No posts yet!</h3>
+                        )
                     }
                 </div>
             </div>

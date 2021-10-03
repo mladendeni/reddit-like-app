@@ -1,0 +1,41 @@
+@import '../styles/variables.scss';
+
+.new-post-wrapper {
+    position: relative;
+}
+
+.add-new-post-toggle-button-icon {
+    margin-right: 5px;
+}
+
+.new-post-form {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    padding: 12px;
+    z-index: 20;
+}
+
+.new-post-textarea {
+    margin-bottom: 10px;
+    padding: 11px;
+    min-width: 300px;
+    min-height: 70px;
+}
+
+.overlay-item {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.8);
+    z-index: 10;
+}
+
+@media (min-width: 640px) {
+    .new-post-textarea {
+        min-width: 500px;
+        min-height: 110px;
+    }
+}
