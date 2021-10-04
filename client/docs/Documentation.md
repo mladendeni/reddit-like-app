@@ -8,7 +8,10 @@ For general usage and look of the application please see the UserDocumentation.m
 
 ## Client Components Documentation
 
-For how the client component signatures please see the auto-generated documentation located at client/styleguide/index.html - [Components Docs](../styleguide/index.html)
+For info on the client component signatures please clone the repo and
+- open in your browser the auto-generated documentation located at client/styleguide/index.html
+or
+- open terminal at {root}/client/ and execute _npm run styleguide_
 
 
 ## API documentation
