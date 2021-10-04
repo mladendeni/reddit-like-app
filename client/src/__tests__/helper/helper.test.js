@@ -1,4 +1,4 @@
-import { timeDifference } from '../Helpers/helper';
+import { timeDifference } from '../../Helpers/helper';
 
 beforeAll(() => {
     jest.useFakeTimers('modern');

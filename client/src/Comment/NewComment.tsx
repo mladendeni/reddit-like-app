@@ -50,7 +50,6 @@ class NewComment extends React.Component<IProps, IState> {
             content: this.state.content
         };
 
-        // TODO: move URLs
         const addCommentUrl = `${this.apiUrl}/add-comment/${this.props.postId}`;
 
         fetch(addCommentUrl, {

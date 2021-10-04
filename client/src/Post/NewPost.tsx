@@ -62,11 +62,9 @@ class NewPost extends React.Component<IProps, IState> {
             content: this.state.content
         };
 
-        // TODO: move URLs
         const addPostUrl = `${this.apiUrl}/add-post`;
 
         fetch(addPostUrl, {
-            // mode: 'no-cors',
             method: 'POST',
             headers: {
                 'Access-Control-Allow-Origin': this.apiUrl,

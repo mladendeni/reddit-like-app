@@ -34,12 +34,9 @@ class Feed extends Component<IProps, IState> {
     }
 
     getPosts() {
-        // TODO: move URLs
         const postsUrl = `${this.apiUrl}/posts`;
 
         fetch(postsUrl, {
-            // TODO: fix headers
-            // mode: 'no-cors',
             headers: {
                 'Access-Control-Allow-Origin': this.apiUrl
             }
