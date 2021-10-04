@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Post from '../Post/Post';
+import { getApiUrl } from '../api';
 import './Feed.scss';
 
 export type PostType = {
@@ -20,23 +21,24 @@ interface IState {
 }
 
 class Feed extends Component<IProps, IState> {
+    apiUrl: string;
+
     constructor(props: IProps) {
         super(props);
 
         this.state = {
             posts: []
         };
+
+        this.apiUrl = getApiUrl();
     }
 
     getPosts() {
-        // TODO: move URLs
-        const postsUrl = 'http://localhost:3001/posts';
+        const postsUrl = `${this.apiUrl}/posts`;
 
         fetch(postsUrl, {
-            // TODO: fix headers
-            // mode: 'no-cors',
             headers: {
-                'Access-Control-Allow-Origin': '*'
+                'Access-Control-Allow-Origin': this.apiUrl
             }
         })
             .then(res => res.json())

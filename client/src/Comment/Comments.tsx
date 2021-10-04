@@ -1,6 +1,7 @@
 import React from 'react';
 import Comment from './Comment';
 import NewComment from './NewComment';
+import { getApiUrl } from '../api';
 
 export type CommentType = {
     id: number;
@@ -12,6 +13,7 @@ export type CommentType = {
 interface IProps {
     postId: number;
     username: string;
+    onNewCommentAdded: (commentsCount: number) => void;
 }
 
 interface IState {
@@ -19,25 +21,26 @@ interface IState {
 }
 
 class Comments extends React.Component<IProps, IState> {
+    apiUrl: string;
+
     constructor(props: IProps) {
         super(props);
 
         this.state = {
             comments: []
         };
-        
-    this.onNewCommentAdded = this.onNewCommentAdded.bind(this);
+
+        this.apiUrl = getApiUrl();
+
+        this.onNewCommentAdded = this.onNewCommentAdded.bind(this);
     }
 
     getComments() {
-        // TODO: move URLs
-        const postsUrl = `http://localhost:3001/comments/${this.props.postId}`;
+        const postsUrl = `${this.apiUrl}/comments/${this.props.postId}`;
 
-        fetch(postsUrl, {
-            // TODO: fix headers
-            // mode: 'no-cors',
+        return fetch(postsUrl, {
             headers: {
-                'Access-Control-Allow-Origin': '*'
+                'Access-Control-Allow-Origin': this.apiUrl
             }
         })
             .then(res => res.json())
@@ -50,8 +53,10 @@ class Comments extends React.Component<IProps, IState> {
             });
     }
 
-    onNewCommentAdded() {
-        this.getComments();
+    async onNewCommentAdded() {
+        await this.getComments();
+
+        this.props.onNewCommentAdded(this.state.comments.length);
     }
 
     componentDidMount() {

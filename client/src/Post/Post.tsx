@@ -6,6 +6,11 @@ import Comments from '../Comment/Comments';
 
 export default function Post(props: { post: PostType, username: string }) {
     const [areCommentsShown, updateAreCommentsShown] = useState(false);
+    const [commentsCount, updateCommentsCount] = useState(props.post.commentsCount);
+
+    const onNewCommentAdded = (commentsCount: number) => {
+        updateCommentsCount(commentsCount);
+    }
 
     return (
         <div className="post-item generic-box mb-3">
@@ -16,11 +21,11 @@ export default function Post(props: { post: PostType, username: string }) {
                     <span className="post-comments-icon">
                         <FontAwesomeIcon icon="comment" />
                     </span>
-                    <span>{props.post.commentsCount} comments</span> {/* TODO: This may not be always the actual comments count */}
+                    <span>{commentsCount} comments</span>
                 </button>
             </div>
             {areCommentsShown && (
-                <Comments postId={props.post.id} username={props.username} />
+                <Comments postId={props.post.id} username={props.username} onNewCommentAdded={onNewCommentAdded} />
             )}
         </div>
     );

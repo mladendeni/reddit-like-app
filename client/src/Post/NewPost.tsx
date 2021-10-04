@@ -1,4 +1,5 @@
 import React, { ChangeEvent, SyntheticEvent } from 'react';
+import { getApiUrl } from '../api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './NewPost.scss';
 
@@ -14,6 +15,8 @@ interface IState {
 }
 
 class NewPost extends React.Component<IProps, IState> {
+    apiUrl: string;
+
     constructor(props: IProps) {
         super(props);
 
@@ -22,6 +25,8 @@ class NewPost extends React.Component<IProps, IState> {
             showError: false,
             content: ''
         };
+
+        this.apiUrl = getApiUrl();
 
         this.toggleAddNewPostForm = this.toggleAddNewPostForm.bind(this);
         this.onPostContentChange = this.onPostContentChange.bind(this);
@@ -57,14 +62,12 @@ class NewPost extends React.Component<IProps, IState> {
             content: this.state.content
         };
 
-        // TODO: move URLs
-        const addPostUrl = 'http://localhost:3001/add-post';
+        const addPostUrl = `${this.apiUrl}/add-post`;
 
         fetch(addPostUrl, {
-            // mode: 'no-cors',
             method: 'POST',
             headers: {
-                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Origin': this.apiUrl,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(post)
