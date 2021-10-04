@@ -16,4 +16,4 @@ An application that resembles Reddit
 
 ## Documentation
 
-Go to {root}/client/docs/Documentation.md
+Go to {root}/client/docs/Documentation.md - [Documentation](./docs/Documentation.md)
