@@ -22,18 +22,18 @@ Assignment Overview:
 Develop an application that resembles Reddit. Users should be able to start new Threads and also reply to existing ones. There should also be a way for users to provide a username. Upvote and downvote functionality will be considered a plus. All data can be stored in memory. Basic integration tests of the backend endpoints are expected. Libraries used are up to you, except for the prerequisites. All additional functionality will also be taken into account.
 
 Prerequisites:
-• Use React for the UI, Javascript and NodeJs for the backend
-• Use Koa for the web server https://koajs.com
+- Use React for the UI, Javascript and NodeJs for the backend
+- Use Koa for the web server https://koajs.com
 
 Requirements:
-• React app should utilise the backend endpoints to persist the Threads
-• All users should have access to other users Threads and Replies
-• Threads and Replies should be visualised similarly to Reddit
+- React app should utilise the backend endpoints to persist the Threads
+- All users should have access to other users Threads and Replies
+- Threads and Replies should be visualised similarly to Reddit
 
 Bonus Points:
-• Full unit and integration tests
-• Persist posts between server restarts
-• Responsive UI
+- Full unit and integration tests
+- Persist posts between server restarts
+- Responsive UI
 
 --------------------------------
 
